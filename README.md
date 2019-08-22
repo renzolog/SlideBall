@@ -1,3 +1,1 @@
-# Bolo Ball
-
-The `original` 1992 game
+GAM_Bolo_Ball
