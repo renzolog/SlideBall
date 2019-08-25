@@ -54,25 +54,17 @@ public class GamePanel extends JPanel {
 
 	TurnEndListener turnEndListener;
 	ResetListener resetListener;
-
-	static final ImageIcon greenPlayerIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/green-player.png");
-	static final ImageIcon redPlayerIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/red-player.png");
-	static final ImageIcon greenBallIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/green-ball.png");
-	static final ImageIcon redBallIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/red-ball.png");
-	static final ImageIcon pointsIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/points.png");
-	static final ImageIcon hardBlockIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/hardBlock.jpg");
-	static final ImageIcon leftArrowIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/leftArrow.png");
-	static final ImageIcon rightArrowIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/rightArrow.png");
-	static final ImageIcon warpIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/warp.png");
+        
+	static final ClassLoader cl = GamePanel.class.getClassLoader();
+	static final ImageIcon greenPlayerIcon = new ImageIcon(cl.getResource("it/abo/green-player.png"));
+	static final ImageIcon redPlayerIcon = new ImageIcon(cl.getResource("it/abo/red-player.png"));
+	static final ImageIcon greenBallIcon = new ImageIcon(cl.getResource("it/abo/green-ball.png"));
+	static final ImageIcon redBallIcon = new ImageIcon(cl.getResource("it/abo/red-ball.png"));
+	static final ImageIcon pointsIcon = new ImageIcon(cl.getResource("it/abo/points.png"));
+	static final ImageIcon hardBlockIcon = new ImageIcon(cl.getResource("it/abo/hardBlock.jpg"));
+	static final ImageIcon leftArrowIcon = new ImageIcon(cl.getResource("it/abo/leftArrow.png"));
+	static final ImageIcon rightArrowIcon = new ImageIcon(cl.getResource("it/abo/rightArrow.png"));
+	static final ImageIcon warpIcon = new ImageIcon(cl.getResource("it/abo/warp.png"));
 
 	public GamePanel() {
 
@@ -160,7 +152,7 @@ public class GamePanel extends JPanel {
 
 		for (int i = 0; i < warpArr.length; ++i) { /*
 													 * per ogni blocco di teletrasporto, assegno un blocco gemello dove
-													 * verrà teletrasportata la pallina (quelli di indice pari
+													 * verrï¿½ teletrasportata la pallina (quelli di indice pari
 													 * accoppiati coi dispari immediatamente successivi)
 													 */
 
@@ -355,7 +347,7 @@ public class GamePanel extends JPanel {
 		}
 
 		@SuppressWarnings("incomplete-switch") /*
-												 * Nei case labels manca il player, che però non si incontra mai con la
+												 * Nei case labels manca il player, che perï¿½ non si incontra mai con la
 												 * ball nella griglia
 												 */
 		public void ballMove(Ball ball) throws InterruptedException {
@@ -450,7 +442,7 @@ public class GamePanel extends JPanel {
 
 			pointsAssignment(getPlayer(), ball);
 
-			if (ball.getCoordinates().y == rows - 1) { /* Se la pallina è all'ultimo row scivola via dallo schermo */
+			if (ball.getCoordinates().y == rows - 1) { /* Se la pallina ï¿½ all'ultimo row scivola via dallo schermo */
 
 				int count = ball.getCoordinates().x;
 
