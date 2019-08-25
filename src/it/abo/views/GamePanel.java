@@ -665,6 +665,8 @@ public class GamePanel extends JPanel {
 			label.setIcon(icon);
 			label.setText(String.valueOf(ball.getBallPoints()));
 			label.setFont(new Font("Comic Sans", Font.BOLD, 18));
+			label.setHorizontalAlignment(JLabel.CENTER);
+			label.setVerticalAlignment(JLabel.CENTER);
 			label.setHorizontalTextPosition(JLabel.CENTER);
 			label.setVerticalTextPosition(JLabel.CENTER);
 			label.setForeground(pointsColor);
