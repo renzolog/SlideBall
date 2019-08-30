@@ -589,7 +589,7 @@ public class GamePanel extends JPanel {
 			int twinX = twin.getCoordinates().x;
 
 			if (blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.EMPTY
-					&& blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.POINTS) {
+					|| blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.POINTS) {
 				deactivate(ball);
 				
 			} else {
