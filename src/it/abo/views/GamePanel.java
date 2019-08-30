@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import it.abo.actions.ResetListener;
 import it.abo.actions.TurnEndListener;
@@ -54,7 +55,7 @@ public class GamePanel extends JPanel {
 
 	TurnEndListener turnEndListener;
 	ResetListener resetListener;
-
+	
 	static final ImageIcon greenPlayerIcon = new ImageIcon(BoloBallFrame.basePath + "green-player.png");
 	static final ImageIcon redPlayerIcon = new ImageIcon(BoloBallFrame.basePath + "red-player.png");
 	static final ImageIcon greenBallIcon = new ImageIcon(BoloBallFrame.basePath + "green-ball.png");
@@ -674,9 +675,7 @@ public class GamePanel extends JPanel {
 			panelHolder[y][x].removeAll();
 			panelHolder[y][x].repaint();
 
-			JLabel label = new JLabel();
-
-			label.setIcon(icon);
+			JLabel label = new JLabel(icon, SwingConstants.CENTER);
 			label.setText(String.valueOf(ball.getBallPoints()));
 			label.setFont(new Font("Comic Sans", Font.BOLD, 18));
 			label.setHorizontalTextPosition(JLabel.CENTER);

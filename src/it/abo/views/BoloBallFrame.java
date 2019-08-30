@@ -29,7 +29,7 @@ NewGameListener, InstructionsListener, BackToMainMenuListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	static final String basePath = new File("").getAbsolutePath() + "/src/it/abo/";
+	static final String basePath = new File("").getAbsolutePath() + "/src/it/abo/res/";
 	
 	MenuPanel menuPanel;
 	boolean inMenu = true;

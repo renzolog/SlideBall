@@ -77,7 +77,7 @@ public class InstructionsPanel extends JPanel {
 		
 		JLabel pic2 = new JLabel(scoreInstructions);
 		
-		JLabel textPic2 = new JLabel("<html>For each row the ball rolls in,<br/>the player earns 2 points (only vertical<br/>movements make points grow)<br/><br/>When no more balls are available for<br/>either player, that’s the end of the game,<br/>and the player with the highest score wins.</html>");
+		JLabel textPic2 = new JLabel("<html>For each row the ball rolls in,<br/>the player earns 2 points (only vertical<br/>movements make points grow)<br/><br/>When no more balls are available for<br/>either player, thatï¿½s the end of the game,<br/>and the player with the highest score wins.</html>");
 		textPic2.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
 		textPic2.setForeground(Color.YELLOW);
 		
