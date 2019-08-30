@@ -1,3 +1,3 @@
-# Bolo Ball
+# Slide ball
 
-The `original` 1992 game
+Inspired by 1992 game Bolo Ball.
