@@ -70,6 +70,7 @@ public class MenuPanel extends JPanel {
 		menuLabels[2].setBackground(new Color(204, 0, 0));
 		menuLabels[2].setOpaque(true);
 		menuLabels[2].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 		menuLabels[2].addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -88,6 +89,7 @@ public class MenuPanel extends JPanel {
 		menuLabels[3].setBackground(Color.GRAY);
 		menuLabels[3].setOpaque(true);
 		menuLabels[3].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 		menuLabels[3].addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -135,6 +137,8 @@ public class MenuPanel extends JPanel {
 		add(menuLabels[3], cons);
 		
 	}
+	
+	/* Makes gradient background */
 	
 	@Override
     protected void paintComponent(Graphics g) {

@@ -60,6 +60,8 @@ NewGameListener, InstructionsListener, BackToMainMenuListener {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
+	/* Updates the score on HUB labels */
+	
 	@Override
 	public void turnEnd(Player player) {
 		
@@ -75,6 +77,8 @@ NewGameListener, InstructionsListener, BackToMainMenuListener {
 		}
 	}
 
+	/* Resets the gamePanel and the HUB when playing again */
+	
 	@Override
 	public void reset() {
 		
@@ -185,6 +189,8 @@ NewGameListener, InstructionsListener, BackToMainMenuListener {
 		this.revalidate();
 	}
 
+	/* Called when entering the Instruction section from the menu */
+	
 	@Override
 	public void instructions() {
 		
@@ -208,6 +214,8 @@ NewGameListener, InstructionsListener, BackToMainMenuListener {
 		this.revalidate();
 	}
 
+	/* Called when going back to main menu from instructions (WIP for an in-game main menu button) */
+	
 	@Override
 	public void backToMainMenu() {
 		

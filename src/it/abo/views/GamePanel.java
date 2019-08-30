@@ -85,7 +85,9 @@ public class GamePanel extends JPanel {
 		setup();
 	}
 
-	public void setup() {
+	/* Sets up the grid for a new game */
+	
+	public void setup() { 
 
 		player1 = new Player(new Point(0, 0), PlayerColor.GREEN);
 		player2 = new Player(new Point(0, 0), PlayerColor.RED);
@@ -110,6 +112,8 @@ public class GamePanel extends JPanel {
 
 		blocksMatrix[player1.getCoordinates().y][player1.getCoordinates().x] = player1;
 
+		/* Here to change the number of blocks for each type */
+		
 		int hardBlockCount = 20;
 		int pointsBlockCount = 10;
 		int leftDirectionBlockCount = 35;
@@ -120,8 +124,10 @@ public class GamePanel extends JPanel {
 
 		Random random = new Random();
 
+		/* Build the matrix that represent our game grid */
+		
 		while (hardBlockCount > 0 || pointsBlockCount > 0 || leftDirectionBlockCount > 0 || rightDirectionBlockCount > 0
-				|| warpBlockCount > 0) { /* costruisco la matrice di blocchi */
+				|| warpBlockCount > 0) {
 
 			int x = random.nextInt(columns);
 			int y = random.nextInt(rows - 4) + 3;
@@ -162,20 +168,23 @@ public class GamePanel extends JPanel {
 				continue;
 			}
 		}
-
-		for (int i = 0; i < warpArr.length; ++i) { /*
-													 * per ogni blocco di teletrasporto, assegno un blocco gemello dove
-													 * verr� teletrasportata la pallina (quelli di indice pari
-													 * accoppiati coi dispari immediatamente successivi)
-													 */
+		
+		/* For each warp block, a twin block is assigned (balls entering one of 
+		 * them will come out from the other one). Even indexes are coupled with
+		 * the following even index, same story with odd indexes. */
+		
+		for (int i = 0; i < warpArr.length; ++i) { 
 
 			warpArr[i].setTwin(warpArr[(i % 2 == 0) ? i + 1 : i - 1]);
 		}
-
+		
+		/* Build JPanel matrix for visual representation of game grid (empty cells for now) */
+		
 		panelHolder = new JPanel[rows][columns];
 
-		for (int i = 0; i < rows; ++i) { /* disegno la griglia */
+		for (int i = 0; i < rows; ++i) {
 			for (int j = 0; j < columns; ++j) {
+				
 				panelHolder[i][j] = new JPanel();
 				panelHolder[i][j].setLayout(new BorderLayout());
 
@@ -184,7 +193,6 @@ public class GamePanel extends JPanel {
 				else {
 					panelHolder[i][j].setBackground(Color.GRAY);
 					panelHolder[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
-
 				}
 
 				add(panelHolder[i][j]);
@@ -196,6 +204,8 @@ public class GamePanel extends JPanel {
 		return playerArr[turn % 2];
 	}
 
+	/* Each player has its own array of Ball (child class of Block), switching turn by turn */
+	
 	Block[] getBallRow() {
 		return ballMatrix[turn % 2];
 	}
@@ -208,7 +218,9 @@ public class GamePanel extends JPanel {
 		this.resetListener = resetListener;
 	}
 
-	public void printMatrix() { /* debug only */
+	/* DEBUG ONLY - prints on console the blocks matrix */
+	
+	public void printMatrix() {
 		for (int i = 0; i < rows; ++i) {
 			for (int j = 0; j < columns; ++j) {
 
@@ -243,6 +255,8 @@ public class GamePanel extends JPanel {
 		}
 	}
 
+	/* Adds JLabels with proper icons for each type of block in blocks matrix to JPanel matrix */
+	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -281,10 +295,9 @@ public class GamePanel extends JPanel {
 
 	}
 
-	public void repositionPlayer() { /*
-										 * ridisegna il giocatore successivo alla fine del turno nell'ultima posizione
-										 * registrata
-										 */
+	/* For each player's turn, this method draws the player in the last registered position */
+	
+	public void repositionPlayer() {
 
 		Player inactivePlayer = (turn % 2 == 0) ? player2 : player1;
 		Player nextPlayer = (turn % 2 == 0) ? player1 : player2;
@@ -302,7 +315,9 @@ public class GamePanel extends JPanel {
 		panelHolder[0][nextPlayer.getCoordinates().x].revalidate();
 	}
 
-	public void updatePlayer(Player player) { /* ridisegna il giocatore quando si muove */
+	/* Updates the player position for each movement and redraws it consequently */
+	
+	public void updatePlayer(Player player) {
 
 //		int coercedMax = Math.max(Math.min(player.getCoordinates().x-1, columns-1), 0);
 //		int coercedMin = Math.max(Math.min(player.getCoordinates().x+1, columns-1), 0);
@@ -319,10 +334,9 @@ public class GamePanel extends JPanel {
 		}
 	}
 
-	public void updatePlayerBalls(Block[] ballsRow, int turn) { /*
-																 * ridisegna le palline a disposizione di ogni giocatore
-																 * all'inizio di ogni turno
-																 */
+	/* Redraws each player's set of balls at the beginning of each turn */
+	
+	public void updatePlayerBalls(Block[] ballsRow, int turn) {
 
 		ImageIcon icon = (turn % 2 == 0) ? greenBallIcon : redBallIcon;
 
@@ -338,6 +352,8 @@ public class GamePanel extends JPanel {
 		}
 	}
 
+	/* Checks if the current player still has moves available */
+	
 	public boolean stillMovesLeft(Player player) {
 
 		int y = (player.getPlayerColor() == PlayerColor.GREEN) ? 0 : 1;
@@ -349,6 +365,7 @@ public class GamePanel extends JPanel {
 		}
 		return false;
 	}
+	
 
 	class BallThrow extends Thread {
 
@@ -358,16 +375,19 @@ public class GamePanel extends JPanel {
 
 			this.ball = ball;
 		}
-
-		@SuppressWarnings("incomplete-switch") /*
-												 * Nei case labels manca il player, che per� non si incontra mai con la
-												 * ball nella griglia
-												 */
+		
+		/* Describes balls' interaction while moving down depending on the underlying block type.
+		 * Player's icon is missing because it doesn't appear in the blocks'grid 
+		 * (that explains the following SuppressWarnings)
+		 */
+		
+		@SuppressWarnings("incomplete-switch")
 		public void ballMove(Ball ball) throws InterruptedException {
 
 			int x, y, previousX, previousY;
 
-			freezed = true;
+			freezed = true; /* prevents the player to move while the ball 
+							is moving (see key listener in BoloBall frame */
 
 			while (ball.isActive() && ball.getCoordinates().y < rows - 1) {
 
@@ -450,12 +470,12 @@ public class GamePanel extends JPanel {
 
 				Thread.sleep(130);
 			}
-
+			
 			deactivate(ball);
 
 			pointsAssignment(getPlayer(), ball);
 
-			if (ball.getCoordinates().y == rows - 1) { /* Se la pallina � all'ultimo row scivola via dallo schermo */
+			if (ball.getCoordinates().y == rows - 1) { /* If the ball reaches the last row, it slides away from the screen */
 
 				int count = ball.getCoordinates().x;
 
@@ -469,12 +489,16 @@ public class GamePanel extends JPanel {
 				}
 			}
 
-			if (turnEndListener != null) /* aggiorna i punteggi */
+			/* End of turn, updates scores */
+			
+			if (turnEndListener != null)
 				turnEndListener.turnEnd(getPlayer());
 
 			player1.setHasMovesLeft(stillMovesLeft(player1));
 			player2.setHasMovesLeft(stillMovesLeft(player2));
 
+			/* If no moves left, end of the game */
+			
 			if (!player1.getHasMovesLeft() && !player2.getHasMovesLeft()) {
 
 				Player winner = (player1.getTotalPoints() > player2.getTotalPoints()) ? player1 : player2;
@@ -493,6 +517,8 @@ public class GamePanel extends JPanel {
 				}
 			}
 
+			/* If there are still moves left, turn is passed and player and balls are switched */
+			
 			++turn;
 			
 			if(!getPlayer().getHasMovesLeft()) {
@@ -625,6 +651,8 @@ public class GamePanel extends JPanel {
 				blocksMatrix[newY][newX] = ball;
 				ball.setCoordinates(new Point(newX, newY));
 				
+				/* Sets inactive warp icon if there's no space available below twin warp block */
+				
 				if (blocksMatrix[twinY + 2][twinX].getBlockType() != BlockType.EMPTY
 						&& blocksMatrix[twinY + 2][twinX].getBlockType() != BlockType.POINTS 
 						&& blocksMatrix[warpBlock.getCoordinates().y - 1][warpBlock.getCoordinates().x].getBlockType() != BlockType.BALL) {
@@ -641,10 +669,9 @@ public class GamePanel extends JPanel {
 			}
 		}
 
-		public void getPoints(Ball ball,
-				PointsBlock pointsBlock) { /*
-											 * assegna il punteggio per la pallina appena lanciata alla pallina stessa
-											 */
+		/* Adds 10 points to the ball's score when capturing a point block */
+		
+		public void getPoints(Ball ball, PointsBlock pointsBlock) { 
 
 			ImageIcon icon = (turn % 2 == 0) ? greenBallIcon : redBallIcon;
 
@@ -673,10 +700,9 @@ public class GamePanel extends JPanel {
 			player.setTotalPoints(player.getTotalPoints() + ball.getBallPoints());
 		}
 
-		public void deactivate(Ball ball) { /*
-											 * viene chiamato quando la pallina ha terminato il movimento (ma non si
-											 * trova nell'ultimo row)
-											 */
+		/* Called when the ball has stopped. Displays the ball's score on the ball itself */
+		
+		public void deactivate(Ball ball) { 
 
 			ImageIcon icon = (turn % 2 == 0) ? greenBallIcon : redBallIcon;
 			Color pointsColor = (getPlayer().getPlayerColor() == PlayerColor.GREEN) ? Color.BLACK : Color.YELLOW;
@@ -688,6 +714,7 @@ public class GamePanel extends JPanel {
 			panelHolder[y][x].repaint();
 
 			JLabel label = new JLabel(icon, SwingConstants.CENTER);
+			
 			label.setText(String.valueOf(ball.getBallPoints()));
 			label.setFont(new Font("Comic Sans", Font.BOLD, 18));
 			label.setHorizontalAlignment(JLabel.CENTER);
@@ -702,7 +729,9 @@ public class GamePanel extends JPanel {
 			ball.setActive(false);
 		}
 
-		public void slideAway(Ball ball) { /* viene chiamato quando la pallina arriva all'ultimo row */
+		/* Called when the ball reaches the last row. It slides away from the screen */
+		
+		public void slideAway(Ball ball) {
 
 			ImageIcon icon = (turn % 2 == 0) ? greenBallIcon : redBallIcon;
 			Color pointsColor = (getPlayer().getPlayerColor() == PlayerColor.GREEN) ? Color.BLACK : Color.YELLOW;
