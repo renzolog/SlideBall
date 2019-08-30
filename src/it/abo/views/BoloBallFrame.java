@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,9 +27,7 @@ public class BoloBallFrame extends JFrame implements TurnEndListener, ResetListe
 NewGameListener, InstructionsListener, BackToMainMenuListener {
 
 	private static final long serialVersionUID = 1L;
-	
-	static final String basePath = new File("").getAbsolutePath() + "/src/it/abo/res/";
-	
+		
 	MenuPanel menuPanel;
 	boolean inMenu = true;
 	boolean inInstructions = false;

@@ -31,18 +31,19 @@ public class InstructionsPanel extends JPanel {
 	
 	public static int page = 1;
 		
-	final static ImageIcon fieldInstructions = new ImageIcon(BoloBallFrame.basePath + "fieldInstructions.png");
-	final static ImageIcon scoreInstructions = new ImageIcon(BoloBallFrame.basePath + "scoreInstructions.png");
-	final static ImageIcon nextPage = new ImageIcon(BoloBallFrame.basePath + "nextPage.png");
-	final static ImageIcon previousPage = new ImageIcon(BoloBallFrame.basePath + "previousPage.png");
-	final static ImageIcon arrowBlocks = new ImageIcon(BoloBallFrame.basePath + "arrowBlocksInstructions.png");
-	final static ImageIcon hardBlock = new ImageIcon(BoloBallFrame.basePath + "hardBlockInstructions.png");
-	final static ImageIcon pointsBlock = new ImageIcon(BoloBallFrame.basePath + "pointsBlockInstructions.png");
-	final static ImageIcon warpBlock = new ImageIcon(BoloBallFrame.basePath + "warpBlockInstructions.png");
-	final static ImageIcon slideInstructions = new ImageIcon(BoloBallFrame.basePath + "slideInstructions.png");
-	final static ImageIcon blockedInstructions = new ImageIcon(BoloBallFrame.basePath + "blockedInstructions.png");
-	final static ImageIcon keysInstructions = new ImageIcon(BoloBallFrame.basePath + "keysInstructions.png");
-	final static ImageIcon mainMenu = new ImageIcon(BoloBallFrame.basePath + "mainMenu.png");
+	final static ClassLoader cl = GamePanel.class.getClassLoader();
+	final static ImageIcon fieldInstructions = new ImageIcon(cl.getResource("it/abo/fieldInstructions.png"));
+	final static ImageIcon scoreInstructions = new ImageIcon(cl.getResource("it/abo/scoreInstructions.png"));
+	final static ImageIcon nextPage = new ImageIcon(cl.getResource("it/abo/nextPage.png"));
+	final static ImageIcon previousPage = new ImageIcon(cl.getResource("it/abo/previousPage.png"));
+	final static ImageIcon arrowBlocks = new ImageIcon(cl.getResource("it/abo/arrowBlocksInstructions.png"));
+	final static ImageIcon hardBlock = new ImageIcon(cl.getResource("it/abo/hardBlockInstructions.png"));
+	final static ImageIcon pointsBlock = new ImageIcon(cl.getResource("it/abo/pointsBlockInstructions.png"));
+	final static ImageIcon warpBlock = new ImageIcon(cl.getResource("it/abo/warpBlockInstructions.png"));
+	final static ImageIcon slideInstructions = new ImageIcon(cl.getResource("it/abo/slideInstructions.png"));
+	final static ImageIcon blockedInstructions = new ImageIcon(cl.getResource("it/abo/blockedInstructions.png"));
+	final static ImageIcon keysInstructions = new ImageIcon(cl.getResource("it/abo/keysInstructions.png"));
+	final static ImageIcon mainMenu = new ImageIcon(cl.getResource("it/abo/mainMenu.png"));
 
 	InstructionsPanel() {
 		
