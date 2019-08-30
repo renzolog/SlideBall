@@ -6,11 +6,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.abo.actions.BackToMainMenuListener;
+import it.abo.actions.InstructionsListener;
+import it.abo.actions.NewGameListener;
 import it.abo.actions.ResetListener;
 import it.abo.actions.TurnEndListener;
 import it.abo.models.Ball;
@@ -20,18 +24,92 @@ import it.abo.models.PlayerColor;
 import it.abo.views.GamePanel.BallThrow;
 
 
-public class BoloBallFrame extends JFrame implements TurnEndListener, ResetListener {
+public class BoloBallFrame extends JFrame implements TurnEndListener, ResetListener, 
+NewGameListener, InstructionsListener, BackToMainMenuListener {
 
 	private static final long serialVersionUID = 1L;
 	
+	static final String basePath = new File("").getAbsolutePath() + "/src/it/abo/";
+	
+	MenuPanel menuPanel;
+	boolean inMenu = true;
+	boolean inInstructions = false;
 	GamePanel gamePanel;
-	BallThrow ballThrow;
+	InstructionsPanel instructionsPanel;
+	
+	JLabel gameName;
 	JPanel pointsPanel;
 	static JLabel player1Points;
 	static JLabel player2Points;
-	JLabel gameName;
+	
+	BallThrow ballThrow;
 	
 	public BoloBallFrame() {
+		
+		if(inMenu) {
+			
+			setResizable(false);
+			
+			menuPanel = new MenuPanel();
+			menuPanel.setNewGameListener(this);
+			menuPanel.setInstructionsListener(this);
+			
+			add(menuPanel, BorderLayout.CENTER);
+		}
+		
+		setSize(1080, 650);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
+
+	@Override
+	public void turnEnd(Player player) {
+		
+		if(player.getPlayerColor() == PlayerColor.GREEN) {
+			player1Points.setText("Green: " + player.getTotalPoints());
+			player1Points.repaint();
+			player1Points.revalidate();
+			
+		} else {
+			player2Points.setText("Red: " + player.getTotalPoints());
+			player2Points.repaint();
+			player2Points.revalidate();
+		}
+	}
+
+	@Override
+	public void reset() {
+		
+		this.remove(gamePanel);
+		this.repaint();
+		
+		gamePanel = new GamePanel();
+		
+		this.add(gamePanel, BorderLayout.CENTER);
+		this.revalidate();
+		
+		player1Points.setText("Green: " + gamePanel.player1.getTotalPoints());
+		player1Points.repaint();
+		player2Points.revalidate();
+		
+		player2Points.setText("Red: " + gamePanel.player2.getTotalPoints());
+		player1Points.repaint();
+		player2Points.revalidate();
+		
+		gamePanel.setTurnEndListener(this);
+		gamePanel.setResetListener(this);
+		
+	}
+
+	@Override
+	public void newGame() {
+		
+		if(inMenu)
+			inMenu = false;
+		
+		this.remove(menuPanel);
+		this.repaint();
 		
 		gamePanel = new GamePanel();
 		gamePanel.setTurnEndListener(this);
@@ -47,14 +125,14 @@ public class BoloBallFrame extends JFrame implements TurnEndListener, ResetListe
 		player1Points.setFont(new Font("Comic Sans", Font.BOLD, 18));
 		player1Points.setForeground(Color.GREEN);
 		
-		gameName = new JLabel("Zio Pippo Ball", JLabel.CENTER);
+		gameName = new JLabel("SlideBall", JLabel.CENTER);
 		gameName.setForeground(Color.YELLOW);
 		gameName.setFont(new Font("Comic Sans", Font.BOLD, 20));
 		
 		player2Points = new JLabel("Red: " + gamePanel.player2.getTotalPoints());
 		player2Points.setForeground(Color.YELLOW);
 		player2Points.setFont(new Font("Comic Sans", Font.BOLD, 18));
-		player2Points.setForeground(Color.RED);
+		player2Points.setForeground(new Color(255,50,50));
 		
 		this.addKeyListener(new KeyAdapter() {
             @Override
@@ -106,49 +184,48 @@ public class BoloBallFrame extends JFrame implements TurnEndListener, ResetListe
 		
 		add(pointsPanel, BorderLayout.SOUTH);
 		add(gamePanel, BorderLayout.CENTER);
-		setSize(1080, 650);
-		setVisible(true);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	}
-
-	@Override
-	public void turnEnd(Player player) {
 		
-		if(player.getPlayerColor() == PlayerColor.GREEN) {
-			player1Points.setText("Green: " + player.getTotalPoints());
-			player1Points.repaint();
-			player1Points.revalidate();
-			
-		} else {
-			player2Points.setText("Red: " + player.getTotalPoints());
-			player2Points.repaint();
-			player2Points.revalidate();
-		}
+		this.revalidate();
 	}
 
 	@Override
-	public void reset() {
-		this.remove(gamePanel);
+	public void instructions() {
+		
+		if(inMenu) {
+			this.remove(menuPanel);
+			inMenu = false;
+			inInstructions = true;
+		} else
+			this.remove(instructionsPanel);
+		
 		this.repaint();
 		
-		gamePanel = new GamePanel();
+		if(instructionsPanel != null)
+			instructionsPanel = null;
 		
-		this.add(gamePanel, BorderLayout.CENTER);
+		instructionsPanel = new InstructionsPanel();
+		instructionsPanel.setInstructionsListener(this);
+		instructionsPanel.setBackToMainMenuListener(this);
+		
+		this.add(instructionsPanel, BorderLayout.CENTER);
 		this.revalidate();
-		
-		player1Points.setText("Green: " + gamePanel.player1.getTotalPoints());
-		player1Points.repaint();
-		player2Points.revalidate();
-		
-		player2Points.setText("Red: " + gamePanel.player2.getTotalPoints());
-		player1Points.repaint();
-		player2Points.revalidate();
-		
-		gamePanel.setTurnEndListener(this);
-		gamePanel.setResetListener(this);
-		
 	}
-	
-	
+
+	@Override
+	public void backToMainMenu() {
+		
+		if(inInstructions) {
+			this.remove(instructionsPanel);
+			inInstructions = false;
+			inMenu = true;
+		} else {
+			this.remove(gamePanel);
+			inMenu = true;
+		}
+		
+		this.repaint();
+		add(menuPanel, BorderLayout.CENTER);
+		this.revalidate();
+	}
+
 }

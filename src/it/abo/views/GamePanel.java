@@ -55,24 +55,16 @@ public class GamePanel extends JPanel {
 	TurnEndListener turnEndListener;
 	ResetListener resetListener;
 
-	static final ImageIcon greenPlayerIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/green-player.png");
-	static final ImageIcon redPlayerIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/red-player.png");
-	static final ImageIcon greenBallIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/green-ball.png");
-	static final ImageIcon redBallIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/red-ball.png");
-	static final ImageIcon pointsIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/points.png");
-	static final ImageIcon hardBlockIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/hardBlock.jpg");
-	static final ImageIcon leftArrowIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/leftArrow.png");
-	static final ImageIcon rightArrowIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/rightArrow.png");
-	static final ImageIcon warpIcon = new ImageIcon(
-			"C:/Users/Lorenzo/Desktop/swing_proj/GAM_Bolo_Ball/src/it/abo/warp.png");
+	static final ImageIcon greenPlayerIcon = new ImageIcon(BoloBallFrame.basePath + "green-player.png");
+	static final ImageIcon redPlayerIcon = new ImageIcon(BoloBallFrame.basePath + "red-player.png");
+	static final ImageIcon greenBallIcon = new ImageIcon(BoloBallFrame.basePath + "green-ball.png");
+	static final ImageIcon redBallIcon = new ImageIcon(BoloBallFrame.basePath + "red-ball.png");
+	static final ImageIcon pointsIcon = new ImageIcon(BoloBallFrame.basePath + "points.png");
+	static final ImageIcon hardBlockIcon = new ImageIcon(BoloBallFrame.basePath + "hardBlock.jpg");
+	static final ImageIcon leftArrowIcon = new ImageIcon(BoloBallFrame.basePath + "leftArrow.png");
+	static final ImageIcon rightArrowIcon = new ImageIcon(BoloBallFrame.basePath + "rightArrow.png");
+	static final ImageIcon warpIcon = new ImageIcon(BoloBallFrame.basePath + "warp.png");
+	static final ImageIcon inactiveWarpIcon = new ImageIcon(BoloBallFrame.basePath + "inactiveWarp.png");
 
 	public GamePanel() {
 
@@ -105,10 +97,10 @@ public class GamePanel extends JPanel {
 
 		blocksMatrix[player1.getCoordinates().y][player1.getCoordinates().x] = player1;
 
-		int hardBlockCount = 150;
+		int hardBlockCount = 20;
 		int pointsBlockCount = 10;
-		int leftDirectionBlockCount = 1;
-		int rightDirectionBlockCount = 1;
+		int leftDirectionBlockCount = 35;
+		int rightDirectionBlockCount = 35;
 		int warpBlockCount = 6;
 
 		warpArr = new WarpBlock[warpBlockCount];
@@ -459,7 +451,7 @@ public class GamePanel extends JPanel {
 
 				while (count >= 0) {
 					slideAway(ball);
-					Thread.sleep(120);
+					Thread.sleep(90);
 					--count;
 				}
 			}
@@ -596,9 +588,9 @@ public class GamePanel extends JPanel {
 			int twinX = twin.getCoordinates().x;
 
 			if (blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.EMPTY
-					|| blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.POINTS) {
+					&& blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.POINTS) {
 				deactivate(ball);
-
+				
 			} else {
 
 				ImageIcon icon = (turn % 2 == 0) ? greenBallIcon : redBallIcon;
@@ -619,6 +611,20 @@ public class GamePanel extends JPanel {
 
 				blocksMatrix[newY][newX] = ball;
 				ball.setCoordinates(new Point(newX, newY));
+				
+				if (blocksMatrix[twinY + 2][twinX].getBlockType() != BlockType.EMPTY
+						&& blocksMatrix[twinY + 2][twinX].getBlockType() != BlockType.POINTS 
+						&& blocksMatrix[warpBlock.getCoordinates().y - 1][warpBlock.getCoordinates().x].getBlockType() != BlockType.BALL) {
+					
+					int warpX = warpBlock.getCoordinates().x;
+					int warpY = warpBlock.getCoordinates().y;
+					
+					panelHolder[warpY][warpX].removeAll();
+					panelHolder[warpY][warpX].repaint();
+					panelHolder[warpY][warpX].add(new JLabel(inactiveWarpIcon));
+					panelHolder[warpY][warpX].revalidate();
+				}
+				
 			}
 		}
 
