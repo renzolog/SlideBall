@@ -1,7 +1,5 @@
-bin/it/abo/actions
-bin/it/abo/models
-bin/it/abo/views
-bin/it/abo/Program.class
+bin/*
 .project
 .settings/*
 .classpath
+/bin/
