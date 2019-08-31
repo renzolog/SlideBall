@@ -2,4 +2,3 @@ bin/*
 .project
 .settings/*
 .classpath
-/bin/
