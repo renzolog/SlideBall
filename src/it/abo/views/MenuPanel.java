@@ -86,6 +86,7 @@ public class MenuPanel extends JPanel {
 		menuLabels[3] = new JLabel("EXIT", JLabel.CENTER);
 		menuLabels[3].setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		menuLabels[3].setFont(new Font("Comic Sans MS", Font.BOLD, 30));
+		menuLabels[3].setForeground(Color.BLACK);
 		menuLabels[3].setBackground(Color.GRAY);
 		menuLabels[3].setOpaque(true);
 		menuLabels[3].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

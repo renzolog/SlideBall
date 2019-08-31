@@ -472,22 +472,30 @@ public class GamePanel extends JPanel {
 			}
 			
 			deactivate(ball);
-
-			pointsAssignment(getPlayer(), ball);
-
+			
 			if (ball.getCoordinates().y == rows - 1) { /* If the ball reaches the last row, it slides away from the screen */
-
+				
 				int count = ball.getCoordinates().x;
-
+				
 				if (getPlayer().getPlayerColor() == PlayerColor.RED)
 					count = columns - count;
-
+				
 				while (count >= 0) {
 					slideAway(ball);
 					Thread.sleep(90);
 					--count;
 				}
 			}
+			
+			/* If the ball stops right under a warp and it's not the last row, it deactivates the twin warp */
+			
+			if(blocksMatrix[ball.getCoordinates().y - 1][ball.getCoordinates().x].getBlockType() == BlockType.WARP) {
+				
+				WarpBlock overBlock = (WarpBlock) blocksMatrix[ball.getCoordinates().y - 1][ball.getCoordinates().x];
+				closeTwinWarp(overBlock);
+			}
+			
+			pointsAssignment(getPlayer(), ball);
 
 			/* End of turn, updates scores */
 			
@@ -627,7 +635,8 @@ public class GamePanel extends JPanel {
 			int twinX = twin.getCoordinates().x;
 
 			if (blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.EMPTY
-					&& blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.POINTS) {
+					&& blocksMatrix[twinY + 1][twinX].getBlockType() != BlockType.POINTS
+					&& ball.getCoordinates().y < rows) {
 				deactivate(ball);
 				
 			} else {
@@ -651,22 +660,19 @@ public class GamePanel extends JPanel {
 				blocksMatrix[newY][newX] = ball;
 				ball.setCoordinates(new Point(newX, newY));
 				
-				/* Sets inactive warp icon if there's no space available below twin warp block */
-				
-				if (blocksMatrix[twinY + 2][twinX].getBlockType() != BlockType.EMPTY
-						&& blocksMatrix[twinY + 2][twinX].getBlockType() != BlockType.POINTS 
-						&& blocksMatrix[warpBlock.getCoordinates().y - 1][warpBlock.getCoordinates().x].getBlockType() != BlockType.BALL) {
-					
-					int warpX = warpBlock.getCoordinates().x;
-					int warpY = warpBlock.getCoordinates().y;
-					
-					panelHolder[warpY][warpX].removeAll();
-					panelHolder[warpY][warpX].repaint();
-					panelHolder[warpY][warpX].add(new JLabel(inactiveWarpIcon));
-					panelHolder[warpY][warpX].revalidate();
-				}
-				
 			}
+		}
+		
+		public void closeTwinWarp(WarpBlock warpBlock) {
+			
+			WarpBlock twin = warpBlock.getTwin();
+			int twinY = twin.getCoordinates().y;
+			int twinX = twin.getCoordinates().x;
+			
+			panelHolder[twinY][twinX].removeAll();
+			panelHolder[twinY][twinX].repaint();
+			panelHolder[twinY][twinX].add(new JLabel(inactiveWarpIcon));
+			panelHolder[twinY][twinX].revalidate();
 		}
 
 		/* Adds 10 points to the ball's score when capturing a point block */
