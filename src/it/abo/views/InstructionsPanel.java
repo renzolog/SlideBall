@@ -31,18 +31,20 @@ public class InstructionsPanel extends JPanel {
 	
 	public static int page = 1;
 		
-	final static ImageIcon fieldInstructions = new ImageIcon(GamePanel.class.getResource("/resources/fieldInstructions.png"));
-	final static ImageIcon scoreInstructions = new ImageIcon(GamePanel.class.getResource("/resources/scoreInstructions.png"));
-	final static ImageIcon nextPage = new ImageIcon(GamePanel.class.getResource("/resources/nextPage.png"));
-	final static ImageIcon previousPage = new ImageIcon(GamePanel.class.getResource("/resources/previousPage.png"));
-	final static ImageIcon arrowBlocks = new ImageIcon(GamePanel.class.getResource("/resources/arrowBlocksInstructions.png"));
-	final static ImageIcon hardBlock = new ImageIcon(GamePanel.class.getResource("/resources/hardBlockInstructions.png"));
-	final static ImageIcon pointsBlock = new ImageIcon(GamePanel.class.getResource("/resources/pointsBlockInstructions.png"));
-	final static ImageIcon warpBlock = new ImageIcon(GamePanel.class.getResource("/resources/warpBlockInstructions.png"));
-	final static ImageIcon slideInstructions = new ImageIcon(GamePanel.class.getResource("/resources/slideInstructions.png"));
-	final static ImageIcon blockedInstructions = new ImageIcon(GamePanel.class.getResource("/resources/blockedInstructions.png"));
-	final static ImageIcon keysInstructions = new ImageIcon(GamePanel.class.getResource("/resources/keysInstructions.png"));
-	final static ImageIcon mainMenu = new ImageIcon(GamePanel.class.getResource("/resources/mainMenu.png"));
+	final ClassLoader cl = InstructionsPanel.class.getClassLoader();
+	
+	final ImageIcon fieldInstructions = new ImageIcon(cl.getResource("fieldInstructions.png"));
+	final ImageIcon scoreInstructions = new ImageIcon(cl.getResource("scoreInstructions.png"));
+	final ImageIcon nextPage = new ImageIcon(cl.getResource("nextPage.png"));
+	final ImageIcon previousPage = new ImageIcon(cl.getResource("previousPage.png"));
+	final ImageIcon arrowBlocks = new ImageIcon(cl.getResource("arrowBlocksInstructions.png"));
+	final ImageIcon hardBlock = new ImageIcon(cl.getResource("hardBlockInstructions.png"));
+	final ImageIcon pointsBlock = new ImageIcon(cl.getResource("pointsBlockInstructions.png"));
+	final ImageIcon warpBlock = new ImageIcon(cl.getResource("warpBlockInstructions.png"));
+	final ImageIcon slideInstructions = new ImageIcon(cl.getResource("slideInstructions.png"));
+	final ImageIcon blockedInstructions = new ImageIcon(cl.getResource("blockedInstructions.png"));
+	final ImageIcon keysInstructions = new ImageIcon(cl.getResource("keysInstructions.png"));
+	final ImageIcon mainMenu = new ImageIcon(cl.getResource("mainMenu.png"));
 
 	InstructionsPanel() {
 		

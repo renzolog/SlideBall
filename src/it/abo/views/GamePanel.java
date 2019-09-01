@@ -67,16 +67,18 @@ public class GamePanel extends JPanel {
 //	static final ImageIcon warpIcon = new ImageIcon(BoloBallFrame.basePath + "warp.png");
 //	static final ImageIcon inactiveWarpIcon = new ImageIcon(BoloBallFrame.basePath + "inactiveWarp.png");
         
-	final static ImageIcon greenPlayerIcon = new ImageIcon(GamePanel.class.getResource("/resources/green-player.png"));
-	final static ImageIcon redPlayerIcon = new ImageIcon(GamePanel.class.getResource("/resources/red-player.png"));
-	final static ImageIcon greenBallIcon = new ImageIcon(GamePanel.class.getResource("/resources/green-ball.png"));
-	final static ImageIcon redBallIcon = new ImageIcon(GamePanel.class.getResource("/resources/red-ball.png"));
-	final static ImageIcon pointsIcon = new ImageIcon(GamePanel.class.getResource("/resources/points.png"));
-	final static ImageIcon hardBlockIcon = new ImageIcon(GamePanel.class.getResource("/resources/hardBlock.jpg"));
-	final static ImageIcon leftArrowIcon = new ImageIcon(GamePanel.class.getResource("/resources/leftArrow.png"));
-	final static ImageIcon rightArrowIcon = new ImageIcon(GamePanel.class.getResource("/resources/rightArrow.png"));
-	final static ImageIcon warpIcon = new ImageIcon(GamePanel.class.getResource("/resources/warp.png"));
-	final static ImageIcon inactiveWarpIcon = new ImageIcon(GamePanel.class.getResource("/resources/inactiveWarp.png"));
+	final ClassLoader cl = GamePanel.class.getClassLoader();
+	
+	final ImageIcon greenPlayerIcon = new ImageIcon(cl.getResource("green-player.png"));
+	final ImageIcon redPlayerIcon = new ImageIcon(cl.getResource("red-player.png"));
+	final ImageIcon greenBallIcon = new ImageIcon(cl.getResource("green-ball.png"));
+	final ImageIcon redBallIcon = new ImageIcon(cl.getResource("red-ball.png"));
+	final ImageIcon pointsIcon = new ImageIcon(cl.getResource("points.png"));
+	final ImageIcon hardBlockIcon = new ImageIcon(cl.getResource("hardBlock.jpg"));
+	final ImageIcon leftArrowIcon = new ImageIcon(cl.getResource("leftArrow.png"));
+	final ImageIcon rightArrowIcon = new ImageIcon(cl.getResource("rightArrow.png"));
+	final ImageIcon warpIcon = new ImageIcon(cl.getResource("warp.png"));
+	final ImageIcon inactiveWarpIcon = new ImageIcon(cl.getResource("inactiveWarp.png"));
 
 	public GamePanel() {
 
