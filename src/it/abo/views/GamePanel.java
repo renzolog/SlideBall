@@ -62,7 +62,7 @@ public class GamePanel extends JPanel {
 	 * down here allows the Jar file to include your resources (remember to check "Export Java resources and files" when
 	 * exporting the project as a Jar).
 	 */
-	
+        
 	final ClassLoader cl = GamePanel.class.getClassLoader();
 	
 	final ImageIcon greenPlayerIcon = new ImageIcon(cl.getResource("green-player.png"));
