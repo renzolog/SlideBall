@@ -55,28 +55,26 @@ public class GamePanel extends JPanel {
 
 	TurnEndListener turnEndListener;
 	ResetListener resetListener;
+
+	/* To include in the jar file resources like images, create a res folder in the project's general folder
+	 * (NOT in src), right click on the project in the workspace and then > properties > Java Build > Source(tab) 
+	 * > Add new folder > add the res folder you created > ok > apply. That done, using the code that follows
+	 * down here allows the Jar file to include your resources (remember to check "Export Java resources and files" when
+	 * exporting the project as a Jar).
+	 */
 	
-//	static final ImageIcon greenPlayerIcon = new ImageIcon(BoloBallFrame.basePath + "green-player.png");
-//	static final ImageIcon redPlayerIcon = new ImageIcon(BoloBallFrame.basePath + "red-player.png");
-//	static final ImageIcon greenBallIcon = new ImageIcon(BoloBallFrame.basePath + "green-ball.png");
-//	static final ImageIcon redBallIcon = new ImageIcon(BoloBallFrame.basePath + "red-ball.png");
-//	static final ImageIcon pointsIcon = new ImageIcon(BoloBallFrame.basePath + "points.png");
-//	static final ImageIcon hardBlockIcon = new ImageIcon(BoloBallFrame.basePath + "hardBlock.jpg");
-//	static final ImageIcon leftArrowIcon = new ImageIcon(BoloBallFrame.basePath + "leftArrow.png");
-//	static final ImageIcon rightArrowIcon = new ImageIcon(BoloBallFrame.basePath + "rightArrow.png");
-//	static final ImageIcon warpIcon = new ImageIcon(BoloBallFrame.basePath + "warp.png");
-//	static final ImageIcon inactiveWarpIcon = new ImageIcon(BoloBallFrame.basePath + "inactiveWarp.png");
-        
-	final static ImageIcon greenPlayerIcon = new ImageIcon(GamePanel.class.getResource("/resources/green-player.png"));
-	final static ImageIcon redPlayerIcon = new ImageIcon(GamePanel.class.getResource("/resources/red-player.png"));
-	final static ImageIcon greenBallIcon = new ImageIcon(GamePanel.class.getResource("/resources/green-ball.png"));
-	final static ImageIcon redBallIcon = new ImageIcon(GamePanel.class.getResource("/resources/red-ball.png"));
-	final static ImageIcon pointsIcon = new ImageIcon(GamePanel.class.getResource("/resources/points.png"));
-	final static ImageIcon hardBlockIcon = new ImageIcon(GamePanel.class.getResource("/resources/hardBlock.jpg"));
-	final static ImageIcon leftArrowIcon = new ImageIcon(GamePanel.class.getResource("/resources/leftArrow.png"));
-	final static ImageIcon rightArrowIcon = new ImageIcon(GamePanel.class.getResource("/resources/rightArrow.png"));
-	final static ImageIcon warpIcon = new ImageIcon(GamePanel.class.getResource("/resources/warp.png"));
-	final static ImageIcon inactiveWarpIcon = new ImageIcon(GamePanel.class.getResource("/resources/inactiveWarp.png"));
+	final ClassLoader cl = GamePanel.class.getClassLoader();
+	
+	final ImageIcon greenPlayerIcon = new ImageIcon(cl.getResource("green-player.png"));
+	final ImageIcon redPlayerIcon = new ImageIcon(cl.getResource("red-player.png"));
+	final ImageIcon greenBallIcon = new ImageIcon(cl.getResource("green-ball.png"));
+	final ImageIcon redBallIcon = new ImageIcon(cl.getResource("red-ball.png"));
+	final ImageIcon pointsIcon = new ImageIcon(cl.getResource("points.png"));
+	final ImageIcon hardBlockIcon = new ImageIcon(cl.getResource("hardBlock.jpg"));
+	final ImageIcon leftArrowIcon = new ImageIcon(cl.getResource("leftArrow.png"));
+	final ImageIcon rightArrowIcon = new ImageIcon(cl.getResource("rightArrow.png"));
+	final ImageIcon warpIcon = new ImageIcon(cl.getResource("warp.png"));
+	final ImageIcon inactiveWarpIcon = new ImageIcon(cl.getResource("inactiveWarp.png"));
 
 	public GamePanel() {
 
