@@ -51,6 +51,15 @@ public class Player extends Block {
 			previousCoordinates = this.getCoordinates();
 		}
 	}
+	
+	public void move(int x, int y) {
+		if(getCoordinates().x >= 0 && getCoordinates().x < 29) {
+			previousCoordinates = this.getCoordinates();
+			setCoordinates(new Point(x, y));
+		} else {
+			previousCoordinates = this.getCoordinates();
+		}
+	}
 
 	public Point getPreviousCoordinates() {
 		return previousCoordinates;

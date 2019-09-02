@@ -159,11 +159,7 @@ NewGameListener, InstructionsListener, BackToMainMenuListener {
                     gamePanel.updatePlayer(currPlayer);
                     break;
                 case 40:
-                	
-                	for(int i = 0; i < - 1; ++i) {
-                		
-                	}
-                	
+                	                	
                 	if(gamePanel.getBallRow()[playerX].getBlockType() == BlockType.BALL 
                 	&& gamePanel.blocksMatrix
                 	[playerY + 2][playerX].getBlockType() == BlockType.EMPTY) {

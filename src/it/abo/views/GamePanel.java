@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
@@ -121,7 +123,7 @@ public class GamePanel extends JPanel {
 
 		Random random = new Random();
 
-		/* Build the matrix that represent our game grid */
+		/* Build the matrix that represents our game grid */
 		
 		while (hardBlockCount > 0 || pointsBlockCount > 0 || leftDirectionBlockCount > 0 || rightDirectionBlockCount > 0
 				|| warpBlockCount > 0) {
@@ -185,6 +187,41 @@ public class GamePanel extends JPanel {
 				panelHolder[i][j] = new JPanel();
 				panelHolder[i][j].setLayout(new BorderLayout());
 
+				/* Add the possibility to click on on a cell of one of the first two rows (the player row or
+				 * the balls one) to change the player position */
+				
+				final int fj = j; /* final to be able to use it in the local scope of mouseClicked() */
+				
+				if(i < 2) {
+					
+					panelHolder[i][j].addMouseListener(new MouseAdapter() {
+						@Override
+						public void mousePressed(MouseEvent e) {
+							
+							if(!freezed) {
+								
+								/* If player is not on that first row cell with fj as x coordinate, 
+								 * move the player there */
+								
+								if(blocksMatrix[0][fj].getBlockType() != BlockType.PLAYER) {
+									
+									getPlayer().move(fj, 0);
+									updatePlayer(getPlayer());
+									
+								/* Otherwise, throw the ball that's right under the player's cell */	
+									
+								} else if (getBallRow()[fj].getBlockType() == BlockType.BALL 
+										&& blocksMatrix[2][fj].getBlockType() == BlockType.EMPTY) {
+									
+									Ball ball = (Ball) getBallRow()[fj];
+			                		BallThrow ballThrow = new BallThrow(ball);
+			                		ballThrow.start();
+								}
+							}
+						}
+					});
+				}
+				
 				if (i == 0)
 					panelHolder[i][j].setBackground(Color.BLACK);
 				else {
@@ -326,8 +363,12 @@ public class GamePanel extends JPanel {
 			panelHolder[player.getPreviousCoordinates().y][player.getPreviousCoordinates().x].removeAll();
 			panelHolder[player.getPreviousCoordinates().y][player.getPreviousCoordinates().x].repaint();
 
+			blocksMatrix[player.getPreviousCoordinates().y][player.getPreviousCoordinates().x].setBlockType(BlockType.EMPTY);
+			
 			panelHolder[player.getCoordinates().y][player.getCoordinates().x].add(new JLabel(icon));
 			panelHolder[player.getCoordinates().y][player.getCoordinates().x].revalidate();
+			
+			blocksMatrix[player.getCoordinates().y][player.getCoordinates().x].setBlockType(BlockType.PLAYER);
 		}
 	}
 
@@ -383,8 +424,8 @@ public class GamePanel extends JPanel {
 
 			int x, y, previousX, previousY;
 
-			freezed = true; /* prevents the player to move while the ball 
-							is moving (see key listener in BoloBall frame */
+			freezed = true; /* prevents the player from moving while the ball 
+							is rolling (see key listener in BoloBall frame */
 
 			while (ball.isActive() && ball.getCoordinates().y < rows - 1) {
 
@@ -656,7 +697,7 @@ public class GamePanel extends JPanel {
 
 				blocksMatrix[newY][newX] = ball;
 				ball.setCoordinates(new Point(newX, newY));
-				
+				ball.setBallPoints(ball.getBallPoints() + 4);
 			}
 		}
 		

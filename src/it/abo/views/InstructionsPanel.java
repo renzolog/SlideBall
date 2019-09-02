@@ -302,7 +302,7 @@ public class InstructionsPanel extends JPanel {
 		
 		JLabel pic7 = new JLabel(slideInstructions, SwingConstants.CENTER);
 		
-		JLabel textPic7 = new JLabel("<html>When a ball slides on top of another one,<br/>it won't stop, but will keep sliding.</html>", SwingConstants.CENTER);
+		JLabel textPic7 = new JLabel("<html>When a ball slides on top of another one,<br/>it won t stop, but will keep sliding.</html>", SwingConstants.CENTER);
 		textPic7.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
 		textPic7.setForeground(Color.YELLOW);
 		
